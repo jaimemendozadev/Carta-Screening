@@ -1,0 +1,14 @@
+{
+  "name": "Screening",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/alexfigliolia/Screening.git",
+  "author": "jaimemendozadev <jaimemendozadev@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "prettify": "yarn run prettier --write './**/*.js'"
+  },
+  "devDependencies": {
+    "prettier": "^2.2.1"
+  }
+}
