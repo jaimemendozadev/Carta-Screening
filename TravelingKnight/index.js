@@ -40,11 +40,11 @@
  ***************************************************************/
 
 function checkBoardArgs(x, y, n) {
-  if(typeof x !== 'number' || typeof y !== 'number' || typeof n !== 'number') {
+  if (typeof x !== "number" || typeof y !== "number" || typeof n !== "number") {
     throw new Error("You're missing a board coordinate.");
   }
 
-  if(n < 3) {
+  if (n < 3) {
     throw new Error("Please specify a bigger size for your board.");
   }
 }
@@ -65,10 +65,12 @@ function getStartEndCoords(movementString, targetDir = "start") {
 }
 
 function tabularizeData(dataMap) {
-  return Array.from(dataMap.entries()).map(([key, path]) => ({
-    start: key,
-    path,
-  }));
+  console.table(
+    Array.from(dataMap.entries()).map(([key, path]) => ({
+      start: key,
+      path,
+    }))
+  );
 }
 
 function checkMoves(verticalCount, verticalDirection, gridArgs, allMovements) {
@@ -218,12 +220,10 @@ function checkMoves(verticalCount, verticalDirection, gridArgs, allMovements) {
   return null;
 }
 
-
 /******************************
  * Main Function
  ******************************/
 function wheresMyKnight(x, y, n) {
-  
   checkBoardArgs(x, y, n);
 
   if (!isInBounds(x, y, n)) {
@@ -292,5 +292,5 @@ function wheresMyKnight(x, y, n) {
     }
   }
 
-  console.table(tabularizeData(allMovements));
+  tabularizeData(allMovements);
 }
