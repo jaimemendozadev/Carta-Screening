@@ -31,6 +31,7 @@ module.exports = (env) => {
           use: [
             { loader: MiniCssLoader },
             { loader: "css-loader" },
+            { loader: "postcss-loader" },
             { loader: "resolve-url-loader" },
             {
               loader: "sass-loader",

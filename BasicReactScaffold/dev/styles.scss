@@ -1,0 +1,9 @@
+body {
+  background-color: pink;
+}
+
+// Copy pasted these styles to prove autoprefixer is working 😁
+::placeholder {
+  color: blue;
+  font-size: 1.5em;
+}

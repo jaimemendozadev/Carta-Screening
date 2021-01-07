@@ -1,0 +1,15 @@
+body {
+  background-color: pink; }
+
+::-moz-placeholder {
+  color: blue;
+  font-size: 1.5em; }
+
+:-ms-input-placeholder {
+  color: blue;
+  font-size: 1.5em; }
+
+::placeholder {
+  color: blue;
+  font-size: 1.5em; }
+
