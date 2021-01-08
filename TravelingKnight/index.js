@@ -11,18 +11,17 @@
   figure out if we can move left or right by either 1 or 2 spaces.
   
   If we construct a proposed path that is in bounds AND the targetDestination is not a starting point
-  we've already visited in the past, then we have a legitimate route we can add to our collection.
+  we've already visited in the past, then we have a legitimate route we can add to our Map collection.
   
   Once we returned the proposed route and make sure we indeed haven't seen it yet, we 
   
-  - store it in our allMovements set, 
+  - store it in our allMovements Map, 
   - slice off the last coordinates from our path, and 
   - add the sliced coords to our startingPoints[] array. 
   
   That way, we can continue finding paths from the last position the Knight was moved to on the board. 
   
-  Please note that depending on where the Knight lands initially on the board, the number of collected paths varies 
-  because there's no logic behind deciding where a Knight should go first. The order is currently hardcoded for the Knight to:
+  Please note that there's no logic behind deciding where a Knight should go first. The order is currently hardcoded for the Knight to:
   
   - First try to move up one space,
   - Try to move down one space,
@@ -31,7 +30,7 @@
 
 
   I also added a check on n board size. If n is ever smaller than 3, throw an error because
-  don't have a big enough board to make L shaped moves on our Knight.
+  we don't have a big enough board to make L shaped moves for our Knight.
 
   */
 
@@ -223,74 +222,80 @@ function checkMoves(verticalCount, verticalDirection, gridArgs, allMovements) {
 /******************************
  * Main Function
  ******************************/
-function wheresMyKnight(x, y, n) {
-  checkBoardArgs(x, y, n);
+function travelingKnight(x, y, n) {
+  try {
+    checkBoardArgs(x, y, n);
 
-  if (!isInBounds(x, y, n)) {
-    return [];
-  }
+    if (!isInBounds(x, y, n)) {
+      return [];
+    }
 
-  const allMovements = new Map();
-  const startingPoints = [[x, y]];
+    const allMovements = new Map();
+    const startingPoints = [[x, y]];
 
-  while (startingPoints.length) {
-    // From the current position
-    const [xCoord, yCoord] = startingPoints.pop();
+    while (startingPoints.length) {
+      // From the current position
+      const [xCoord, yCoord] = startingPoints.pop();
 
-    const currentStart = `${xCoord}, ${yCoord}`;
+      const currentStart = `${xCoord}, ${yCoord}`;
 
-    const gridArgs = [xCoord, yCoord, n];
+      const gridArgs = [xCoord, yCoord, n];
 
-    if (!allMovements.has(currentStart)) {
-      // Can you move one space up?
-      if (isInBounds(xCoord - 1, yCoord, n)) {
-        const result = checkMoves(1, "up", gridArgs, allMovements);
+      // If we haven't seen this starting point
+      if (!allMovements.has(currentStart)) {
 
-        if (result !== null && !allMovements.has(result)) {
-          allMovements.set(currentStart, result);
-          const lastStartingPoint = getStartEndCoords(result, "end");
-          startingPoints.push(lastStartingPoint);
-          continue;
+        // Can we move one space up?
+        if (isInBounds(xCoord - 1, yCoord, n)) {
+          const result = checkMoves(1, "up", gridArgs, allMovements);
+
+          if (result !== null && !allMovements.has(result)) {
+            allMovements.set(currentStart, result);
+            const lastStartingPoint = getStartEndCoords(result, "end");
+            startingPoints.push(lastStartingPoint);
+            continue;
+          }
         }
-      }
 
-      // Can you move one space down?
-      if (isInBounds(xCoord + 1, yCoord, n)) {
-        const result = checkMoves(1, "down", gridArgs, allMovements);
+        // Can we move one space down?
+        if (isInBounds(xCoord + 1, yCoord, n)) {
+          const result = checkMoves(1, "down", gridArgs, allMovements);
 
-        if (result !== null && !allMovements.has(result)) {
-          allMovements.set(currentStart, result);
-          const lastStartingPoint = getStartEndCoords(result, "end");
-          startingPoints.push(lastStartingPoint);
-          continue;
+          if (result !== null && !allMovements.has(result)) {
+            allMovements.set(currentStart, result);
+            const lastStartingPoint = getStartEndCoords(result, "end");
+            startingPoints.push(lastStartingPoint);
+            continue;
+          }
         }
-      }
 
-      // Can you move two spaces up?
-      if (isInBounds(xCoord - 2, yCoord, n)) {
-        const result = checkMoves(2, "up", gridArgs, allMovements);
+        // Can we move two spaces up?
+        if (isInBounds(xCoord - 2, yCoord, n)) {
+          const result = checkMoves(2, "up", gridArgs, allMovements);
 
-        if (result !== null && !allMovements.has(result)) {
-          allMovements.set(currentStart, result);
-          const lastStartingPoint = getStartEndCoords(result, "end");
-          startingPoints.push(lastStartingPoint);
-          continue;
+          if (result !== null && !allMovements.has(result)) {
+            allMovements.set(currentStart, result);
+            const lastStartingPoint = getStartEndCoords(result, "end");
+            startingPoints.push(lastStartingPoint);
+            continue;
+          }
         }
-      }
 
-      // Can you move two spaces down?
-      if (isInBounds(xCoord + 2, yCoord, n)) {
-        const result = checkMoves(2, "down", gridArgs, allMovements);
+        // Can we move two spaces down?
+        if (isInBounds(xCoord + 2, yCoord, n)) {
+          const result = checkMoves(2, "down", gridArgs, allMovements);
 
-        if (result !== null && !allMovements.has(result)) {
-          allMovements.set(currentStart, result);
-          const lastStartingPoint = getStartEndCoords(result, "end");
-          startingPoints.push(lastStartingPoint);
-          continue;
+          if (result !== null && !allMovements.has(result)) {
+            allMovements.set(currentStart, result);
+            const lastStartingPoint = getStartEndCoords(result, "end");
+            startingPoints.push(lastStartingPoint);
+            continue;
+          }
         }
       }
     }
-  }
 
-  tabularizeData(allMovements);
+    tabularizeData(allMovements);
+  } catch (error) {
+    console.error(error);
+  }
 }
