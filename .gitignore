@@ -64,6 +64,7 @@ typings/
 dist
 
 # public folder
-public/*.png
-public/*.js
-public/*.css
+BasicReactScaffold/public/*.png
+BasicReactScaffold/public/*.js
+BasicReactScaffold/public/*.css
+BasicReactScaffold/public/*.txt
