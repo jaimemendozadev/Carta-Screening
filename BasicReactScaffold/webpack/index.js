@@ -21,7 +21,6 @@ module.exports = (env) => {
         {
           test: /\.(t|j)sx?$/,
           options: {
-            cacheDirectory: true,
             babelrc: true,
           },
           loader: "babel-loader",
@@ -35,9 +34,6 @@ module.exports = (env) => {
             { loader: "resolve-url-loader" },
             {
               loader: "sass-loader",
-              options: {
-                sourceMap: true,
-              },
             },
           ],
         },
